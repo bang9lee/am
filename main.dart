@@ -9,13 +9,14 @@ class ShoppingMall {
     {'반바지': 38000},
     {'양말': 5000},
   ];
-  
+
   // 장바구니를 저장하는 리스트, 이름과 개수를 맵으로 저장
   final List<Map<String, int>> cart = [];
 
   // 상품 목록을 출력하는 메서드
   void _printProducts() {
-    for (var p in products) print('${p.keys.first} / ${p.values.first}원'); // 각 상품 이름과 가격 출력
+    for (var p in products)
+      print('${p.keys.first} / ${p.values.first}원'); // 각 상품 이름과 가격 출력
     print(''); // 빈 줄 추가로 깔끔한 출력
   }
 
@@ -23,14 +24,18 @@ class ShoppingMall {
   void _addToCart() {
     stdout.write('상품 이름을 입력해 주세요 !\n'); // 사용자에게 상품 이름 입력 요청
     final name = stdin.readLineSync()?.trim(); // 입력값을 받아 공백 제거
-    if (name == null || !products.any((p) => p.keys.first == name)) { // 입력값이 없거나 상품 목록에 없는 경우
+    if (name == null || !products.any((p) => p.keys.first == name)) {
+      // 입력값이 없거나 상품 목록에 없는 경우
       print('입력값이 올바르지 않아요 !.'); // 오류 메시지 출력
       return;
     }
 
     stdout.write('상품 개수를 입력해 주세요 !\n'); // 상품 개수 입력 요청
-    final count = int.tryParse(stdin.readLineSync()?.trim() ?? '0') ?? -2; // 입력값을 정수로 변환, 실패 시 -2
-    if (count <= 0) { // 개수가 0 이하일 경우
+    final count =
+        int.tryParse(stdin.readLineSync()?.trim() ?? '0') ??
+        -2; // 입력값을 정수로 변환, 실패 시 -2
+    if (count <= 0) {
+      // 개수가 0 이하일 경우
       print('0개보다 많은 개수의 상품만 담을 수 있어요 !'); // 오류 메시지 출력
       return;
     }
@@ -41,11 +46,14 @@ class ShoppingMall {
 
   // 장바구니에 담긴 상품의 총 가격을 계산하고 출력하는 메서드
   void _showTotal() {
-    if (cart.isEmpty) { // 장바구니가 비어있는 경우
+    if (cart.isEmpty) {
+      // 장바구니가 비어있는 경우
       print('장바구니가 비어있습니다.');
       return;
     }
-    final items = cart.map((e) => e.keys.first).join(', '); // 장바구니 상품 이름들을 쉼표로 연결
+    final items = cart
+        .map((e) => e.keys.first)
+        .join(', '); // 장바구니 상품 이름들을 쉼표로 연결
     final total = cart.fold(
       0,
       (sum, e) =>
@@ -71,16 +79,18 @@ class ShoppingMall {
 
   // 쇼핑몰 프로그램을 실행하는 주 메서드
   void run() {
-    while (true) { // 무한 루프를 통해 메뉴 반복 실행
+    while (true) {
+      // 무한 루프를 통해 메뉴 반복 실행
       // 메뉴 옵션 출력
-       print( //""" 3줄쓰기 """
-        """ 
-      ---------------------------------------------------------------------------------------------------------------------------
-      [1] 상품 목록 보기 | [2] 장바구니에 담기 | [3] 장바구니에 담긴 상품의 총 가격 보기 | [4] 프로그램종료 | [6] 장바구니 초기화
-      ---------------------------------------------------------------------------------------------------------------------------""",
+      print( 
+        "---------------------------------------------------------------------------------------------------------------------------\n"
+        "[1] 상품 목록 보기 | [2] 장바구니에 담기 | [3] 장바구니에 담긴 상품의 총 가격 보기 | [4] 프로그램종료 | [6] 장바구니 초기화\n"
+        "---------------------------------------------------------------------------------------------------------------------------",
       );
+
       final choice = stdin.readLineSync()?.trim(); // 사용자 입력 받기
-      switch (choice) { // 입력값에 따라 기능 실행
+      switch (choice) {
+        // 입력값에 따라 기능 실행
         case '1':
           _printProducts(); // 상품 목록 출력
           break;
@@ -92,7 +102,8 @@ class ShoppingMall {
           break;
         case '4':
           stdout.write('정말 종료하시겠습니까? (5 입력 시 종료): '); // 종료 확인 메시지
-          if (stdin.readLineSync()?.trim() == '5') { // 5 입력 시 종료
+          if (stdin.readLineSync()?.trim() == '5') {
+            // 5 입력 시 종료
             print('이용해 주셔서 감사합니다 ~ 안녕히 가세요 !');
             return; // 프로그램 종료
           }
@@ -102,7 +113,7 @@ class ShoppingMall {
           _clearCart(); // 장바구니 초기화
           break;
         default: // 잘못된 입력 처리
-          print('\n잘못된 입력입니다. 1, 2, 3, 4, 6 중 하나를 선택해주세요.\n');
+          print('잘못된 입력입니다. 1, 2, 3, 4, 6 중 하나를 선택해주세요.\n');
       }
     }
   }
